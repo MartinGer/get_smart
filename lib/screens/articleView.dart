@@ -27,11 +27,22 @@ class _ArticleState extends State<ArticleView> {
   final articleController = TextEditingController();
   final sourcesController = TextEditingController();
 
+  List<DropdownMenuItem> _categories = [
+    new DropdownMenuItem(child: new Icon(Icons.history), value: new Icon(Icons.history)),
+    new DropdownMenuItem(child: new Icon(Icons.person), value: new Icon(Icons.person)),
+    new DropdownMenuItem(child: new Icon(Icons.settings), value: new Icon(Icons.settings)), 
+    new DropdownMenuItem(child: new Icon(Icons.map), value: new Icon(Icons.map)),
+    new DropdownMenuItem(child: new Icon(Icons.arrow_right), value: new Icon(Icons.arrow_right)),
+  ];
+
+  Icon _curCategorie;
+
   @override
   void initState() {
     super.initState();
 
     if (widget._hasText) {
+      _curCategorie = widget._article.categorie;
       headlineController.text = widget._article.headline;
       articleController.text = widget._article.article;
       sourcesController.text = widget._article.sources;
@@ -68,19 +79,31 @@ class _ArticleState extends State<ArticleView> {
         ),
         body: new SingleChildScrollView(
             padding: new EdgeInsets.all(8.0),
-            child: new Center(
                 child: new Column(children: <Widget>[
-              new TextField(
-                controller: headlineController,
-                decoration: new InputDecoration(
-                  labelText: 'headline',
-                  hintText: 'add your headline here',
-                  enabled: widget._editMode ? true : false,
-                ),
-                autocorrect: true,
-                maxLength: 50,
-                maxLengthEnforced: true,
-              ),
+                  new Row (
+                    mainAxisAlignment: MainAxisAlignment.start,  
+                    children: <Widget>[
+                      new DropdownButton(
+                        value: null,
+                        items: _categories,
+                        hint: _curCategorie,
+                        onChanged: (value) {
+                          setState(() {
+                            _curCategorie = value;
+                          });
+                        }, 
+                      ),
+                    ]),
+                  new TextField(
+                    controller: headlineController,
+                    decoration: new InputDecoration(
+                      labelText: 'headline',
+                      hintText: 'add your headline here',
+                      enabled: widget._editMode ? true : false,
+                    ),
+                    maxLength: 50,
+                    maxLengthEnforced: true,
+                  ),
               new TextField(
                 controller: articleController,
                 decoration: new InputDecoration(
@@ -88,7 +111,6 @@ class _ArticleState extends State<ArticleView> {
                   hintText: 'add your article here',
                   enabled: widget._editMode ? true : false,
                 ),
-                autocorrect: true,
                 maxLines: null,
               ),
               new TextField(
@@ -98,10 +120,9 @@ class _ArticleState extends State<ArticleView> {
                   hintText: 'add your sources here',
                   enabled: widget._editMode ? true : false,
                 ),
-                autocorrect: true,
                 maxLines: null,
               ),
-            ]))));
+            ])));
   }
 
   saveArticle() {
@@ -110,6 +131,7 @@ class _ArticleState extends State<ArticleView> {
     });
     if (headlineController.text != '') {
       Article article = new Article(
+          _curCategorie,
           GlobalState.uniqueId,
           headlineController.text,
           articleController.text,

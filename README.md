@@ -17,7 +17,7 @@ and also save your sources.
 - [ ] (it's annoying to write on a phone, some access to the database over the computer)
 - [ ] Redux
 - [ ] tests
-- [ ] categories
+- [x] categories
 - [ ] search option
 - [ ] nicer UI
 - [ ] show a random article

@@ -57,7 +57,7 @@ class _HomeState extends State<Home> {
         color: Colors.red
         ),
       child: ListTile(
-          leading: const Icon(Icons.event_seat),
+          leading: _store.getArticleList()[index].categorie,
           title: new Text('${_store.getArticleList()[index].headline}'),
           onTap: () {
             Navigator.push(
