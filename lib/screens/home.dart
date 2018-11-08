@@ -42,18 +42,32 @@ class _HomeState extends State<Home> {
   }
 
   Widget showArticle(BuildContext context, int index) {
-  return new ListTile(
-    leading: const Icon(Icons.event_seat),
-    title: new Text('${_store.getArticleList()[index].headline}'),
-    onTap: () {
-      //Navigator.of(context).pushNamed('/Article'); 
-      Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => ArticleView.openArticle(_store.getArticleList()[index]),
-          ),
-        );
-    }
-  );
+    final article = _store.getArticleList()[index];
+    return Dismissible(
+      key: Key((article.key).toString()),
+      onDismissed: (direction) {
+        setState(() {
+                  _store.getArticleList().removeAt(index);
+                });
+
+      Scaffold.of(context)
+            .showSnackBar(SnackBar(content: Text('Article ${article.headline} deleted')));
+      },
+      background: Container(
+        color: Colors.red
+        ),
+      child: ListTile(
+          leading: const Icon(Icons.event_seat),
+          title: new Text('${_store.getArticleList()[index].headline}'),
+          onTap: () {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ArticleView.openArticle(_store.getArticleList()[index]),
+                ),
+              );
+          }
+        )
+     );
   }
 }

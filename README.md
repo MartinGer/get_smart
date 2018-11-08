@@ -12,15 +12,15 @@ and also save your sources.
 
 ### ToDos
 
-* delete article
-* Firebase backup
-* (it's annoying to write on a phone, some access to the database over the computer)
-* Redux
-* tests
-* categories
-* search option
-* nicer UI
-* show a random article
-* favorites
-* sorting options
-* app icon
+- [x] delete article
+- [ ] Firebase backup
+- [ ] (it's annoying to write on a phone, some access to the database over the computer)
+- [ ] Redux
+- [ ] tests
+- [ ] categories
+- [ ] search option
+- [ ] nicer UI
+- [ ] show a random article
+- [ ] favorites
+- [ ] sorting options
+- [ ] app icon
