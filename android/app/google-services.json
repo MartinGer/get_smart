@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "854297202239",
+    "firebase_url": "https://getsmart-ec79d.firebaseio.com",
+    "project_id": "getsmart-ec79d",
+    "storage_bucket": "getsmart-ec79d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:854297202239:android:581eaeff1768bc71",
+        "android_client_info": {
+          "package_name": "com.example.getsmart"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "854297202239-b91g83o8eurnn5fnkc261lbrhiljjmji.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB850V-tePhA2sS1xAh2z_PWA_jlkNX-fc"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -5,7 +5,13 @@ buildscript {
     }
 
     dependencies {
+        // Google auth
         classpath 'com.android.tools.build:gradle:3.1.2'
+        // classpath 'com.google.gms:google-services:4.0.1'
+          
+        // Flutter auth
+        classpath 'com.android.tools.build:gradle:3.1.2'
+        classpath 'com.google.gms:google-services:3.2.1'
     }
 }
 
@@ -27,3 +33,4 @@ subprojects {
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
+
