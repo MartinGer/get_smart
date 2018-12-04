@@ -15,7 +15,7 @@ and also save your sources.
 - [x] delete article
 - [ ] Firebase backup
 - [ ] (it's annoying to write on a phone, some access to the database over the computer)
-- [ ] Redux
+- [x] Redux (way to much overhead for the current usecase=
 - [ ] tests
 - [x] categories
 - [ ] search option
