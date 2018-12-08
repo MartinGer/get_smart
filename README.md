@@ -13,9 +13,9 @@ and also save your sources.
 ### ToDos
 
 - [x] delete article
-- [ ] Firebase backup
+- [x] Firebase backup
 - [ ] (it's annoying to write on a phone, some access to the database over the computer)
-- [ ] Redux
+- [ ] Redux (other branch)
 - [ ] tests
 - [x] categories
 - [ ] search option

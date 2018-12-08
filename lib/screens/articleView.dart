@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
-import './../code/GlobalState.dart';
+import './../code/utils.dart';
+import './../code/firebase.service.dart';
+import './../models/Article.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ArticleView extends StatefulWidget {
   bool _editMode;
@@ -21,28 +24,34 @@ class ArticleView extends StatefulWidget {
 }
 
 class _ArticleState extends State<ArticleView> {
-  GlobalState _store = GlobalState.instance;
+  FirebaseService _firebaseService = FirebaseService.get();
 
   final headlineController = TextEditingController();
   final articleController = TextEditingController();
   final sourcesController = TextEditingController();
 
   List<DropdownMenuItem> _categories = [
-    new DropdownMenuItem(child: new Icon(Icons.history), value: new Icon(Icons.history)),
-    new DropdownMenuItem(child: new Icon(Icons.person), value: new Icon(Icons.person)),
-    new DropdownMenuItem(child: new Icon(Icons.settings), value: new Icon(Icons.settings)), 
-    new DropdownMenuItem(child: new Icon(Icons.map), value: new Icon(Icons.map)),
-    new DropdownMenuItem(child: new Icon(Icons.arrow_right), value: new Icon(Icons.arrow_right)),
+    new DropdownMenuItem(
+        child: new Icon(Icons.history), value: new Icon(Icons.history)),
+    new DropdownMenuItem(
+        child: new Icon(Icons.person), value: new Icon(Icons.person)),
+    new DropdownMenuItem(
+        child: new Icon(Icons.settings), value: new Icon(Icons.settings)),
+    new DropdownMenuItem(
+        child: new Icon(Icons.map), value: new Icon(Icons.map)),
+    new DropdownMenuItem(
+        child: new Icon(Icons.arrow_right), value: new Icon(Icons.arrow_right)),
   ];
 
-  Icon _curCategorie;
+  Icon _curCategorie = new Icon(Icons.arrow_right);
 
   @override
   void initState() {
     super.initState();
 
     if (widget._hasText) {
-      _curCategorie = widget._article.categorie;
+      String categorieString = widget._article.categorie;
+      _curCategorie = getIcon(categorieString);
       headlineController.text = widget._article.headline;
       articleController.text = widget._article.article;
       sourcesController.text = widget._article.sources;
@@ -79,31 +88,31 @@ class _ArticleState extends State<ArticleView> {
         ),
         body: new SingleChildScrollView(
             padding: new EdgeInsets.all(8.0),
-                child: new Column(children: <Widget>[
-                  new Row (
-                    mainAxisAlignment: MainAxisAlignment.start,  
-                    children: <Widget>[
-                      new DropdownButton(
-                        value: null,
-                        items: _categories,
-                        hint: _curCategorie,
-                        onChanged: (value) {
-                          setState(() {
-                            _curCategorie = value;
-                          });
-                        }, 
-                      ),
-                    ]),
-                  new TextField(
-                    controller: headlineController,
-                    decoration: new InputDecoration(
-                      labelText: 'headline',
-                      hintText: 'add your headline here',
-                      enabled: widget._editMode ? true : false,
+            child: new Column(children: <Widget>[
+              new Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: <Widget>[
+                    new DropdownButton(
+                      value: null,
+                      items: _categories,
+                      hint: _curCategorie,
+                      onChanged: (value) {
+                        setState(() {
+                          _curCategorie = value;
+                        });
+                      },
                     ),
-                    maxLength: 50,
-                    maxLengthEnforced: true,
-                  ),
+                  ]),
+              new TextField(
+                controller: headlineController,
+                decoration: new InputDecoration(
+                  labelText: 'headline',
+                  hintText: 'add your headline here',
+                  enabled: widget._editMode ? true : false,
+                ),
+                maxLength: 50,
+                maxLengthEnforced: true,
+              ),
               new TextField(
                 controller: articleController,
                 decoration: new InputDecoration(
@@ -131,15 +140,12 @@ class _ArticleState extends State<ArticleView> {
     });
     if (headlineController.text != '') {
       Article article = new Article(
-          _curCategorie,
-          GlobalState.uniqueId,
+          getIconString(_curCategorie), 
           headlineController.text,
           articleController.text,
-          sourcesController.text);
-      if (!_store.articleExists(article)) {
-        _store.add(article);
-        GlobalState.uniqueId++;
-      }
+          sourcesController.text
+          );
+      _firebaseService.addToFirebase(article);
     }
   }
 
